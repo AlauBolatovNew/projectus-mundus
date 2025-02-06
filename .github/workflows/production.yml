@@ -17,7 +17,7 @@ permissions:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  deploy:
     environment: production
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -32,7 +32,8 @@ jobs:
           role-session-name: gha-terraform-session
 
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Deploy Terraform code
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          terraform init
+          terraform fmt -check
+          terraform apply -auto-approve
