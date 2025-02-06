@@ -1,5 +1,5 @@
 resource "aws_eks_cluster" "demo" {
-  name     = "prod-cluster"
+  name     = var.project_name
   role_arn = aws_iam_role.demo.arn
 
   access_config {

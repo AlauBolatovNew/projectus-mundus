@@ -1,14 +1,14 @@
 module "sample_vpc" {
-  source   = "./vpc"
+  source   = "../modules/vpc"
   cidr     = "10.10.0.0/16"
   vpc_name = "tf demo vpc"
 }
 
 module "kubernetes_cluster" {
-  source = "./eks"
+  source = "../modules/eks"
 
-  project_name = "kubernetes_cluster"
-
+  project_name = var.cluster_name
+ 
   private_subnet_1_id = module.sample_vpc.private_subnet_1_id
   private_subnet_2_id = module.sample_vpc.private_subnet_2_id
   private_subnet_3_id = module.sample_vpc.private_subnet_3_id

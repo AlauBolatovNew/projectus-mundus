@@ -6,9 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: [ "main", "development" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "development" ]
 
 permissions:
   id-token: write # This is required for requesting the JWT
@@ -18,7 +18,7 @@ permissions:
 jobs:
   # This workflow contains a single job called "build"
   deploy:
-    environment: production
+    environment: ${{(github.ref == 'refs/heads/main' && 'production') || (github.ref == 'refs/heads/development' && 'development')}}
     # The type of runner that the job will run on
     runs-on: "ubuntu-22.04"
 
@@ -36,7 +36,8 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Deploy Terraform code
+        working-directory: root/
         run: |
           terraform init
           terraform fmt -check
-          terraform apply -destroy -auto-approve
+          terraform apply -destroy -auto-approve -var 'cluster_name=${{github.ref_name}}-cluster'
