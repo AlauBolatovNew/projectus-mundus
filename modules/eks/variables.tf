@@ -22,6 +22,6 @@ variable "public_subnet_3_id" {
   type = string
 }
 
-variable "project_name" {
+variable "environment" {
   type = string
 }
