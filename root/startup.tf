@@ -8,7 +8,7 @@ module "kubernetes_cluster" {
   source = "../modules/eks"
 
   project_name = var.cluster_name
- 
+
   private_subnet_1_id = module.sample_vpc.private_subnet_1_id
   private_subnet_2_id = module.sample_vpc.private_subnet_2_id
   private_subnet_3_id = module.sample_vpc.private_subnet_3_id
