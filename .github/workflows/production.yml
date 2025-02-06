@@ -24,6 +24,9 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Clone repo
+        uses: actions/checkout@v3
+        
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -33,7 +36,6 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Deploy Terraform code
-        working-directory: /startup
         run: |
           terraform init
           terraform fmt -check
