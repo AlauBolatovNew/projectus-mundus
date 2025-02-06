@@ -5,7 +5,7 @@ resource "aws_subnet" "private-us-east-2a" {
   availability_zone = "us-east-2a"
 
   tags = {
-    Name                              = "private-us-east-2a"
+    Name                              = "${var.environment}-private-us-east-2a"
     "kubernetes.io/role/internal-elb" = "1"
     "kubernetes.io/cluster/demo"      = "owned"
   }
@@ -19,7 +19,7 @@ resource "aws_subnet" "private-us-east-2b" {
   availability_zone = "us-east-2b"
 
   tags = {
-    Name                              = "private-us-east-2b"
+    Name                              = "${var.environment}-private-us-east-2b"
     "kubernetes.io/role/internal-elb" = "1"
     "kubernetes.io/cluster/demo"      = "owned"
   }
@@ -33,7 +33,7 @@ resource "aws_subnet" "private-us-east-2c" {
   availability_zone = "us-east-2c"
 
   tags = {
-    Name                              = "private-us-east-2c"
+    Name                              = "${var.environment}-private-us-east-2c"
     "kubernetes.io/role/internal-elb" = "1"
     "kubernetes.io/cluster/demo"      = "owned"
   }
@@ -48,7 +48,7 @@ resource "aws_subnet" "public-us-east-2a" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name                         = "public-us-east-2a"
+    Name                         = "${var.environment}-public-us-east-2a"
     "kubernetes.io/role/elb"     = "1"
     "kubernetes.io/cluster/demo" = "owned"
   }
@@ -63,7 +63,7 @@ resource "aws_subnet" "public-us-east-2b" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name                         = "public-us-east-2b"
+    Name                         = "${var.environment}-public-us-east-2b"
     "kubernetes.io/role/elb"     = "1"
     "kubernetes.io/cluster/demo" = "owned"
   }
@@ -78,7 +78,7 @@ resource "aws_subnet" "public-us-east-2c" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name                         = "public-us-east-2c"
+    Name                         = "${var.environment}-public-us-east-2c"
     "kubernetes.io/role/elb"     = "1"
     "kubernetes.io/cluster/demo" = "owned"
   }

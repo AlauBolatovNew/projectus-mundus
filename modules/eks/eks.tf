@@ -1,5 +1,5 @@
 resource "aws_eks_cluster" "demo" {
-  name     = var.project_name
+  name     = "${var.environment}-eks"
   role_arn = aws_iam_role.demo.arn
 
   access_config {
@@ -45,7 +45,7 @@ resource "aws_eks_node_group" "private-nodes" {
   }
 
   labels = {
-    node = "kubenode02"
+    node = "${var.environment}-kubenode"
   }
 
   depends_on = [

@@ -1,7 +1,7 @@
 resource "aws_iam_role" "demo" {
-  name = "eks-cluster-demo"
+  name = "${var.environment}-eks-cluster-iam-role"
   tags = {
-    tag-key = "eks-cluster-demo"
+    tag-key = "${var.environment}-eks-cluster"
   }
 
   assume_role_policy = jsonencode({
@@ -26,7 +26,7 @@ resource "aws_iam_role_policy_attachment" "demo-AmazonEKSClusterPolicy" {
 }
 
 resource "aws_iam_role" "nodes" {
-  name = "eks-node-group-nodes"
+  name = "${var.environment}-eks-node-group-nodes"
 
   assume_role_policy = jsonencode({
     Statement = [{
