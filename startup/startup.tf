@@ -1,11 +1,11 @@
 module "sample_vpc" {
-  source   = "./vpc"
+  source   = "../vpc"
   cidr     = "10.10.0.0/16"
   vpc_name = "tf demo vpc"
 }
 
 module "kubernetes_cluster" {
-  source = "./eks"
+  source = "../eks"
 
   project_name = "kubernetes_cluster"
 
