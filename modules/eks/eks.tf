@@ -35,7 +35,7 @@ resource "aws_launch_template" "eks_nodes" {
   }
 
   user_data = base64encode(templatefile(
-    "./linux_user_data.tpl",
+    "${path.module}/linux_user_data.tpl",
     {
       cluster_name        = aws_eks_cluster.demo.name
       cluster_endpoint    = aws_eks_cluster.demo.endpoint
