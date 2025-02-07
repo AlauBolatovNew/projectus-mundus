@@ -6,8 +6,7 @@ cluster_name               = "dev-cluster"
 cluster_role_arn           = "arn:aws:iam::864899873372:role/eks-cluster-role"
 instance_type              = "t3.medium"
 
-# Comment out the AMI ID to let Terraform fetch it dynamically, or manually provide an AMI ID.
-ami_id = "ami-0c614dee691cbbf37"  # Uncomment this if you want to manually specify the AMI ID.
+ami_id = "ami-0c614dee691cbbf37"
 
 desired_size         = 3
 max_size             = 5
