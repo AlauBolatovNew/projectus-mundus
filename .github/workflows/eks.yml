@@ -18,7 +18,7 @@ permissions:
 jobs:
   # This workflow contains a single job called "build"
   deploy:
-    environment: ${{(github.ref == 'refs/heads/main' && 'production') || (github.ref == 'refs/heads/development' && 'development')}}
+    environment: ${{github.ref_name}}
     # The type of runner that the job will run on
     runs-on: "ubuntu-22.04"
 
@@ -40,4 +40,4 @@ jobs:
         run: |
           terraform init
           terraform fmt -check
-          terraform apply -destroy -auto-approve -var 'environment=${{github.ref_name}}-cluster'
+          terraform apply -destroy -auto-approve -var-file=${{github.ref_name}}.tfvars

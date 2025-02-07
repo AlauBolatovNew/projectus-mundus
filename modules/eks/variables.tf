@@ -25,3 +25,7 @@ variable "public_subnet_3_id" {
 variable "environment" {
   type = string
 }
+
+variable "eks_version" {
+  type = string
+}
