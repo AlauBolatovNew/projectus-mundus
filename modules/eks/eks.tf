@@ -31,9 +31,7 @@ resource "aws_launch_template" "eks_nodes" {
   instance_type = "t3.medium"
 
   network_interfaces {
-    # associate_public_ip_address = true
-    associate_public_ip_address = aws_eks_cluster.demo.
-    security_groups             = [aws_security_group.eks_nodes.id]
+    associate_public_ip_address = true
   }
 
   user_data = base64encode(templatefile(
