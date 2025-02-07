@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
-    bucket = "bolatovalau"
+    bucket = "bolatovalau2"
     key    = "development.terraform.tfstate"
-    region = "us-east-2"
+    region = "us-east-1"
   }
 
   required_providers {
@@ -14,5 +14,5 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-2"
+  region = "us-east-1"
 }

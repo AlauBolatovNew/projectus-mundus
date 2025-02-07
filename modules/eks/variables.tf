@@ -1,89 +1,49 @@
-variable "enable_bootstrap_user_data" {
-  description = "Determines whether the bootstrap configurations are populated within the user data template"
-  type        = bool
-  default     = false
-}
-
 variable "cluster_name" {
   description = "Name of the EKS cluster"
   type        = string
-  default     = ""
 }
 
-variable "cluster_endpoint" {
-  description = "Endpoint of associated EKS cluster"
+variable "cluster_role_arn" {
+  description = "IAM role ARN for EKS cluster"
   type        = string
-  default     = ""
 }
 
-variable "cluster_auth_base64" {
-  description = "Base64 encoded CA of associated EKS cluster"
-  type        = string
-  default     = ""
-}
-
-variable "cluster_service_cidr" {
-  description = "The CIDR block (IPv4 or IPv6) used by the cluster to assign Kubernetes service IP addresses. This is derived from the cluster itself"
-  type        = string
-  default     = ""
-}
-
-variable "cluster_ip_family" {
-  description = "The IP family used to assign Kubernetes pod and service addresses. Valid values are `ipv4` (default) and `ipv6`"
-  type        = string
-  default     = "ipv4"
-}
-
-variable "additional_cluster_dns_ips" {
-  description = "Additional DNS IP addresses to use for the cluster. Only used when `ami_type` = `BOTTLEROCKET_*`"
+variable "subnets" {
+  description = "List of subnet IDs for the EKS nodes"
   type        = list(string)
-  default     = []
 }
 
-variable "bootstrap_extra_args" {
-  description = "Additional arguments passed to the bootstrap script. When `ami_type` = `BOTTLEROCKET_*`; these are additional [settings](https://github.com/bottlerocket-os/bottlerocket#settings) that are provided to the Bottlerocket user data"
+variable "security_group_id" {
+  description = "Security group ID for the EKS nodes"
   type        = string
-  default     = ""
 }
 
-variable "user_data_template_path" {
-  description = "Path to a local, custom user data template file to use when rendering user data"
+variable "instance_type" {
+  description = "EC2 instance type for the worker nodes"
   type        = string
-  default     = ""
 }
 
-variable "vpc_id" {
-  type = string
+variable "ami_id" {
+  description = "AMI ID for the worker nodes"
+  type        = string
 }
 
-variable "private_subnet_1_id" {
-  type = string
+variable "desired_size" {
+  description = "Desired number of worker nodes"
+  type        = number
 }
 
-variable "private_subnet_2_id" {
-  type = string
+variable "max_size" {
+  description = "Maximum number of worker nodes"
+  type        = number
 }
 
-variable "private_subnet_3_id" {
-  type = string
+variable "min_size" {
+  description = "Minimum number of worker nodes"
+  type        = number
 }
 
-variable "public_subnet_1_id" {
-  type = string
-}
-
-variable "public_subnet_2_id" {
-  type = string
-}
-
-variable "public_subnet_3_id" {
-  type = string
-}
-
-variable "environment" {
-  type = string
-}
-
-variable "eks_version" {
-  type = string
+variable "on_demand_percentage" {
+  description = "Percentage of on-demand instances"
+  type        = number
 }
