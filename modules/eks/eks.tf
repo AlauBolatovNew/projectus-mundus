@@ -16,9 +16,30 @@ resource "aws_eks_cluster" "demo" {
       var.public_subnet_2_id,
       var.public_subnet_3_id
     ]
+    security_group_ids = [aws_security_group.eks_nodes.id]
   }
 
   depends_on = [aws_iam_role_policy_attachment.demo-AmazonEKSClusterPolicy]
+}
+
+resource "aws_security_group" "eks_nodes" {
+  name_prefix = "eks-cluster-sg"
+  description = "EKS Cluster Security Group"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
 resource "aws_launch_template" "eks_nodes" {
@@ -29,13 +50,6 @@ resource "aws_launch_template" "eks_nodes" {
   network_interfaces {
     associate_public_ip_address = true
     security_groups             = [aws_security_group.eks_nodes.id]
-  }
-
-  tag_specifications {
-    resource_type = "instance"
-    tags = {
-      Name = "eks-node"
-    }
   }
 }
 

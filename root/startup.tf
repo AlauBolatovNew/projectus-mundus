@@ -10,6 +10,7 @@ module "kubernetes_cluster" {
   environment = var.environment
   eks_version = var.eks_version
 
+  vpc_id              = module.sample_vpc.vpc_id
   private_subnet_1_id = module.sample_vpc.private_subnet_1_id
   private_subnet_2_id = module.sample_vpc.private_subnet_2_id
   private_subnet_3_id = module.sample_vpc.private_subnet_3_id
