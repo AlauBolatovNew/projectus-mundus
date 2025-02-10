@@ -92,11 +92,36 @@ resource "aws_autoscaling_group" "eks_asg" {
     }
   }
 
-
   # Define Tags for Auto Scaling Group (Note the use of "tag" block)
   tag {
     key                 = "centos-eks"
     value               = "eks-asg"
     propagate_at_launch = true
+  }
+}
+
+resource "aws_eks_access_entry" "example" {
+  cluster_name      = aws_eks_cluster.eks_centos.name
+  principal_arn     = "arn:aws:iam::864899873372:root"
+  type              = "STANDARD"
+}
+
+resource "aws_eks_access_policy_association" "ss" {
+  cluster_name  = aws_eks_cluster.eks_centos.name
+  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+  principal_arn = "arn:aws:iam::864899873372:root"
+
+  access_scope {
+    type       = "cluster"
+  }
+}
+
+resource "aws_eks_access_policy_association" "s5" {
+  cluster_name  = aws_eks_cluster.eks_centos.name
+  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
+  principal_arn = "arn:aws:iam::864899873372:root"
+
+  access_scope {
+    type       = "cluster"
   }
 }
