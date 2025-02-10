@@ -15,7 +15,7 @@ resource "aws_eks_cluster" "demo" {
       var.public_subnet_2_id,
       var.public_subnet_3_id
     ]
-    security_group_ids = [var.security_group_id]
+    # security_group_ids = [var.security_group_id]
   }
 
   enabled_cluster_log_types = ["api", "audit", "authenticator"]
