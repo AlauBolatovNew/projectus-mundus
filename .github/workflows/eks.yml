@@ -40,5 +40,5 @@ jobs:
         run: |
           terraform init
           terraform fmt -check
-          terraform apply -destroy -auto-approve -var 'environment=${{github.ref_name}}-cluster'
+          terraform apply -auto-approve -var 'environment=${{github.ref_name}}-cluster'
  
