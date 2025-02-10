@@ -71,7 +71,7 @@ resource "aws_eks_access_policy_association" "ss" {
   }
 }
 
-resource "aws_eks_access_policy_association" "ss" {
+resource "aws_eks_access_policy_association" "s5" {
   cluster_name  = aws_eks_cluster.demo.name
   policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
   principal_arn = "arn:aws:iam::864899873372:root"
