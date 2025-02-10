@@ -26,7 +26,7 @@ variable "environment" {
   type = string
 }
 
-variable "security_group_id" {
-  description = "Security group ID for the EKS nodes"
-  type        = string
-}
+# variable "security_group_id" {
+#   description = "Security group ID for the EKS nodes"
+#   type        = string
+# }
