@@ -6,6 +6,10 @@ resource "aws_eks_cluster" "eks_centos" {
     security_group_ids = [var.security_group_id]
   }
 
+  access_config {
+    authentication_mode = "API_AND_CONFIG_MAP"
+  }
+
   enabled_cluster_log_types = ["api", "audit", "authenticator"]
 
   kubernetes_network_config {
