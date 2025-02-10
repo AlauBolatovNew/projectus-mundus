@@ -41,3 +41,4 @@ jobs:
           terraform init
           terraform fmt -check
           terraform apply -destroy -auto-approve -var 'environment=${{github.ref_name}}-cluster'
+ 
