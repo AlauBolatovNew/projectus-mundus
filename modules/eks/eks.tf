@@ -1,6 +1,33 @@
+resource "aws_iam_role" "demo" {
+  name = "eks-cluster-demo"
+  tags = {
+    tag-key = "eks-cluster-demo"
+  }
+
+  assume_role_policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Principal" : {
+          "Service" : [
+            "eks.amazonaws.com"
+          ]
+        },
+        "Action" : "sts:AssumeRole"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "demo-AmazonEKSClusterPolicy" {
+  role       = aws_iam_role.demo.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+}
+
 resource "aws_eks_cluster" "eks_centos" {
   name     = var.cluster_name
-  role_arn = var.cluster_role_arn
+  role_arn = aws_iam_role.demo.arn
   vpc_config {
     subnet_ids         = var.subnets
     security_group_ids = [var.security_group_id]
@@ -16,6 +43,7 @@ resource "aws_eks_cluster" "eks_centos" {
     service_ipv4_cidr = "172.20.0.0/16"
   }
 }
+
 # Define the Launch Template for Worker Nodes
 resource "aws_launch_template" "eks_launch_template" {
   name_prefix   = "eks-node-"
