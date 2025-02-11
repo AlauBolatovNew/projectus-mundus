@@ -91,8 +91,30 @@ resource "aws_launch_template" "eks_launch_template" {
   }
 
   user_data = base64encode(<<EOF
-#!/bin/bash
-/etc/eks/bootstrap.sh ${aws_eks_cluster.eks_centos.name}
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="//"
+
+--//
+Content-Type: application/node.eks.aws
+
+---
+apiVersion: node.eks.aws/v1alpha1
+kind: NodeConfig
+spec:
+  cluster:
+    apiServerEndpoint: ${aws_eks_cluster.eks_centos.endpoint}
+    certificateAuthority: ${aws_eks_cluster.eks_centos.certificate_authority[0].data}
+    cidr: 172.20.0.0/16
+    name: dev-cluster
+  kubelet:
+    config:
+      maxPods: 17
+      clusterDNS:
+      - 172.20.0.10
+    flags:
+    - "--node-labels=eks.amazonaws.com/nodegroup-image=${var.ami_id},eks.amazonaws.com/capacityType=ON_DEMAND,eks.amazonaws.com/nodegroup=mmmm"
+
+--//--
 EOF
   )
 

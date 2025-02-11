@@ -6,7 +6,7 @@ cluster_name               = "dev-cluster"
 cluster_role_arn           = "arn:aws:iam::864899873372:role/eks-cluster-role"
 instance_type              = "t3.medium"
 
-ami_id = "ami-0c614dee691cbbf37"
+ami_id = "ami-070ee37f2c1386fd6"
 
 desired_size         = 2
 max_size             = 5
