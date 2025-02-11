@@ -8,7 +8,7 @@ instance_type              = "t3.medium"
 
 ami_id = "ami-0c614dee691cbbf37"
 
-desired_size         = 3
+desired_size         = 2
 max_size             = 5
 min_size             = 1
 on_demand_percentage = 20

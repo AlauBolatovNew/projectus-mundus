@@ -88,7 +88,7 @@ resource "aws_launch_template" "eks_launch_template" {
   iam_instance_profile {
     name = aws_iam_instance_profile.ec2_profile.name
   }
-
+  
   user_data = base64encode(<<EOF
 #!/bin/bash
 /etc/eks/bootstrap.sh ${aws_eks_cluster.eks_centos.name}
@@ -133,8 +133,28 @@ resource "aws_autoscaling_group" "eks_asg" {
 
   # Define Tags for Auto Scaling Group (Note the use of "tag" block)
   tag {
-    key                 = "centos-eks"
-    value               = "eks-asg"
+    key                 = "eks:cluster-name"
+    value               = "dev-cluster"
+    propagate_at_launch = true
+  }
+  tag {
+    key                 = "eks:nodegroup-name"
+    value               = "mmmm"
+    propagate_at_launch = true
+  }
+  tag {
+    key                 = "k8s.io/cluster-autoscaler/dev-cluster"
+    value               = "owned"
+    propagate_at_launch = true
+  }
+  tag {
+    key                 = "k8s.io/cluster-autoscaler/enabled"
+    value               = "true"
+    propagate_at_launch = true
+  }
+  tag {
+    key                 = "kubernetes.io/cluster/dev-cluster"
+    value               = "owned"
     propagate_at_launch = true
   }
 }
