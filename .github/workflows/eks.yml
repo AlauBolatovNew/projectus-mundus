@@ -42,3 +42,4 @@ jobs:
           terraform fmt -check
           terraform apply -destroy -auto-approve -var-file='${{github.ref_name}}.tfvars'
           terraform apply -auto-approve -var-file='${{github.ref_name}}.tfvars'
+ 
