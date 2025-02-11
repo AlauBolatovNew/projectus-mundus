@@ -81,14 +81,15 @@ resource "aws_iam_instance_profile" "ec2_profile" {
 
 # Define the Launch Template for Worker Nodes
 resource "aws_launch_template" "eks_launch_template" {
-  name_prefix   = "eks-node-"
-  instance_type = var.instance_type
-  image_id      = var.ami_id # You can use this as a dynamic value if specified in TFVars
+  name_prefix            = "eks-node-"
+  instance_type          = var.instance_type
+  image_id               = var.ami_id # You can use this as a dynamic value if specified in TFVars
+  vpc_security_group_ids = [var.security_group_id]
 
   iam_instance_profile {
     name = aws_iam_instance_profile.ec2_profile.name
   }
-  
+
   user_data = base64encode(<<EOF
 #!/bin/bash
 /etc/eks/bootstrap.sh ${aws_eks_cluster.eks_centos.name}

@@ -21,4 +21,5 @@ module "eks" {
   max_size             = var.max_size
   min_size             = var.min_size
   on_demand_percentage = var.on_demand_percentage
+  eks_sg               = module.vpc.eks_sg
 }

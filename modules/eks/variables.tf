@@ -47,3 +47,7 @@ variable "on_demand_percentage" {
   description = "Percentage of on-demand instances"
   type        = number
 }
+
+variable "eks_sg" {
+  type = string
+}
