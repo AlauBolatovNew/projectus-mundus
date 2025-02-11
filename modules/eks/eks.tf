@@ -74,12 +74,20 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadO
   role       = aws_iam_role.nodes.name
 }
 
+resource "aws_iam_instance_profile" "ec2_profile" {
+  name = "ec2-instance-profile"
+  role = aws_iam_role.nodes.name
+}
 
 # Define the Launch Template for Worker Nodes
 resource "aws_launch_template" "eks_launch_template" {
   name_prefix   = "eks-node-"
   instance_type = var.instance_type
   image_id      = var.ami_id # You can use this as a dynamic value if specified in TFVars
+
+  iam_instance_profile {
+    name = aws_iam_instance_profile.ec2_profile.name
+  }
 
   user_data = base64encode(<<EOF
 #!/bin/bash
@@ -122,7 +130,6 @@ resource "aws_autoscaling_group" "eks_asg" {
       }
     }
   }
-  service_linked_role_arn = aws_iam_role.nodes.arn
 
   # Define Tags for Auto Scaling Group (Note the use of "tag" block)
   tag {
@@ -133,9 +140,9 @@ resource "aws_autoscaling_group" "eks_asg" {
 }
 
 resource "aws_eks_access_entry" "example" {
-  cluster_name      = aws_eks_cluster.eks_centos.name
-  principal_arn     = "arn:aws:iam::864899873372:root"
-  type              = "STANDARD"
+  cluster_name  = aws_eks_cluster.eks_centos.name
+  principal_arn = "arn:aws:iam::864899873372:root"
+  type          = "STANDARD"
 }
 
 resource "aws_eks_access_policy_association" "ss" {
@@ -144,7 +151,7 @@ resource "aws_eks_access_policy_association" "ss" {
   principal_arn = "arn:aws:iam::864899873372:root"
 
   access_scope {
-    type       = "cluster"
+    type = "cluster"
   }
 }
 
@@ -154,6 +161,6 @@ resource "aws_eks_access_policy_association" "s5" {
   principal_arn = "arn:aws:iam::864899873372:root"
 
   access_scope {
-    type       = "cluster"
+    type = "cluster"
   }
 }
